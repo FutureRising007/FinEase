@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import mongoose from "mongoose";
+import "dotenv/config"
 import { systemLogs } from "../utils/Logger.js";
 
 const connectionToDB = async () => {
@@ -7,9 +8,10 @@ const connectionToDB = async () => {
 		const connectionParams = {
 			dbName: process.env.DB_NAME,
 		};
+		mongoose.set("strictQuery", false);
 		const connect = await mongoose.connect(
 			process.env.MONGO_URI,
-			connectionParams
+			connectionParams, 
 		);
 		console.log(
 			`${chalk.blue.bold(
@@ -19,7 +21,8 @@ const connectionToDB = async () => {
 		systemLogs.info(`MongoDB Connected: ${connect.connection.host}`);
 	} catch (error) {
 		console.error(`${chalk.red.bold(`Error: ${error.message}`)}`);
-		process.exit(1);
+		process.exit(1); 
+		
 	}
 };
 
