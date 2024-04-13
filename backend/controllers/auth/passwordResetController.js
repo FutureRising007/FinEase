@@ -90,7 +90,7 @@ const resetPassword = asyncHandler(async (req, res) => {
 		throw new Error("Passwords must be at least 8 characters long");
 	}
 
-	const passwordResetToken = await VerificationToken.findOne({ userId });
+	const passwordResetToken = await VerificationToken.findOne({ _userId: userId, token: emailToken });
 
 	if (!passwordResetToken) {
 		res.status(400);
